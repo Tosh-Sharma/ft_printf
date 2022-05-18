@@ -35,6 +35,11 @@ SRCS = 	ft_isalpha.c \
 		ft_putstr_fd.c \
 		ft_putendl_fd.c \
 		ft_putnbr_fd.c \
+		ft_putunbr_fd.c \
+		ft_putnbr_16.c \
+		ft_putnbr_16_caps.c \
+		ft_revstr.c \
+		ft_straddchar.c
 
 OBJS = ${SRCS:.c=.o}
 
