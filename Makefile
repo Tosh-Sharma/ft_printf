@@ -46,6 +46,8 @@ SRCS = 	ft_printf.c \
 		printers/pf_putchar.c \
 		printers/pf_putstr.c \
 		printers/pf_putnbr.c \
+		printers/pf_putunbr.c \
+		printers/pf_putpointer.c \
 		$(LIB_SRC)
 
 OBJS = ${SRCS:.c=.o}

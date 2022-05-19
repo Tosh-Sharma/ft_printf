@@ -1,11 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pf_putchar.c                                       :+:      :+:    :+:   */
+/*   pf_putunbr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsharma <tsharma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/16 14:45:47 by tsharma           #+#    #+#             */
+/*   Created: 2022/05/19 13:16:01 by tsharma           #+#    #+#             */
 /*   Updated: 2022/05/19 16:36:45 by tsharma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -13,13 +13,34 @@
 #include "../ft_printf.h"
 #include "../libft/libft.h"
 
-void	pf_putchar(char c, int fd, t_snc *item)
+void	putunbr(unsigned int n, unsigned int base, char *input, t_snc *item)
 {
-	char		str[2];
+	int			iterator;
+	char		c[20];
 
-	str[0] = c;
-	str[1] = '\0';
-	item->count = 1;
-	item->str = str;
-	ft_putchar_fd(c, fd);
+	iterator = 0;
+	while (n > 0)
+	{
+		c[iterator] = input[n % base];
+		n = n / base;
+		iterator++;
+	}
+	c[iterator] = 0;
+	item->str = ft_revstr(c);
+	ft_putstr_fd(item->str, 1);
+	free(item->str);
+	item->count = iterator;
+}
+
+void	pf_putunbr(unsigned int n, int base, char *input, t_snc *item)
+{
+	if (n == 0)
+	{
+		ft_putchar_fd(input[0], 1);
+		item->str = ft_straddchar("", '0');
+		free(item->str);
+		item->count = 1;
+	}
+	else
+		putunbr(n, base, input, item);
 }

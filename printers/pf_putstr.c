@@ -6,14 +6,14 @@
 /*   By: tsharma <tsharma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 15:05:52 by tsharma           #+#    #+#             */
-/*   Updated: 2022/05/18 18:52:58 by tsharma          ###   ########.fr       */
+/*   Updated: 2022/05/19 16:36:45 by tsharma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 #include "../libft/libft.h"
 
-void	pf_putstr(char *s, int fd, type_snc *item)
+void	pf_putstr(char *s, int fd, t_snc *item)
 {
 	if (s == NULL)
 	{
