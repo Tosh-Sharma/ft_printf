@@ -6,20 +6,15 @@
 /*   By: tsharma <tsharma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:45:47 by tsharma           #+#    #+#             */
-/*   Updated: 2022/05/19 16:36:45 by tsharma          ###   ########.fr       */
+/*   Updated: 2022/05/20 16:40:19 by tsharma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 #include "../libft/libft.h"
 
-void	pf_putchar(char c, int fd, t_snc *item)
+int	pf_putchar(char c, int fd)
 {
-	char		str[2];
-
-	str[0] = c;
-	str[1] = '\0';
-	item->count = 1;
-	item->str = str;
 	ft_putchar_fd(c, fd);
+	return (1);
 }

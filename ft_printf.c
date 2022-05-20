@@ -6,35 +6,73 @@
 /*   By: tsharma <tsharma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:12:16 by tsharma           #+#    #+#             */
-/*   Updated: 2022/05/19 16:37:29 by tsharma          ###   ########.fr       */
+/*   Updated: 2022/05/20 18:24:34 by tsharma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft/libft.h"
-#include <stdarg.h>
 #include <stdio.h>
 
-void	handle_print(const char *s, va_list args, t_snc *item)
+int	handle_print(const char *s, va_list args, size_t *i)
 {
+	*i = *i + 1;
 	if (s[0] == 'c')
-		pf_putchar(va_arg(args, int), 1, item);
+		return (pf_putchar(va_arg(args, int), 1));
 	else if (s[0] == 's')
-		pf_putstr(va_arg(args, char *), 1, item);
+		return (pf_putstr(va_arg(args, char *), 1));
 	else if (s[0] == 'p')
-		pf_putpointer(va_arg(args, unsigned long), item);
+		return (pf_putpointer(va_arg(args, unsigned long)));
 	else if (s[0] == 'd' || s[0] == 'i')
-		pf_putnbr(va_arg(args, int), 10, "0123456789", item);
+		return (pf_putnbr(va_arg(args, int), "0123456789"));
 	else if (s[0] == 'u')
-		pf_putunbr(va_arg(args, unsigned int), 10, "0123456789", item);
+		return (pf_putunbr(va_arg(args, unsigned int), "0123456789"));
 	else if (s[0] == 'x')
-		pf_putunbr(va_arg(args, unsigned int), 16, "0123456789abcdef", item);
+		return (pf_putunbr(va_arg(args, unsigned int), "0123456789abcdef"));
 	else if (s[0] == 'X')
-		pf_putunbr(va_arg(args, unsigned int), 16, "0123456789ABCDEF", item);
+		return (pf_putunbr(va_arg(args, unsigned int), "0123456789ABCDEF"));
 	else if (s[0] == '%')
-		pf_putchar('%', 1, item);
+		return (pf_putchar('%', 1));
 	else
-		pf_putchar(s[0], 1, item);
+		return (pf_putchar(s[0], 1));
+}
+
+int	handle_spaces(const char *s, va_list args, size_t *i)
+{
+	int	n;
+	int	count;
+
+	count = 0;
+	if (s[0] == 'd' || s[0] == 'i')
+	{
+		n = va_arg(args, int);
+		if (n >= 0)
+		{
+			ft_putchar_fd(' ', 1);
+			++count;
+		}
+		count += pf_putnbr(n, "0123456789");
+	}
+	i = i + 2;
+	return (count);
+}
+
+int	analyse_flags(const char *s, va_list args, size_t *i)
+{
+	if (s[0] == ' ')
+		return (handle_spaces(&s[1], args, i));
+	else if (s[0] == '+')
+		return (handle_spaces(&s[1], args, i));
+	else if (s[0] == '#')
+		return (handle_spaces(&s[1], args, i));
+	else if (s[0] == '-')
+		return (handle_spaces(&s[1], args, i));
+	else if (s[0] == '0')
+		return (handle_spaces(&s[1], args, i));
+	else if (s[0] == '.')
+		return (handle_spaces(&s[1], args, i));
+	else
+		return (handle_print(s, args, i));
 }
 
 int	ft_printf(const char *s, ...)
@@ -42,7 +80,6 @@ int	ft_printf(const char *s, ...)
 	size_t		i;
 	va_list		args;
 	int			count;
-	t_snc		item;
 
 	i = 0;
 	count = 0;
@@ -50,16 +87,9 @@ int	ft_printf(const char *s, ...)
 	while (i < ft_strlen(s))
 	{
 		if (s[i] == '%')
-		{
-			handle_print(&s[i + 1], args, &item);
-			i++;
-			count += item.count;
-		}
+			count += analyse_flags(&s[i + 1], args, &i);
 		else
-		{
-			ft_putchar_fd(s[i], 1);
-			count++;
-		}
+			count += pf_putchar(s[i], 1);
 		i++;
 	}
 	va_end(args);
@@ -72,9 +102,11 @@ int	ft_printf(const char *s, ...)
 // 	int		a;
 // 	int		b;
 // 	int		c;
+// 	int		*d;
 
-// 	a = 0;
-// 	b = ft_printf("My o/p: %p\n", a);
-// 	c = printf("OG o/p: %p\n", a);
+// 	a = 25;
+// 	s1 = "Hello";
+// 	b = ft_printf("My o/p: %s \n", s1);
+// 	c = printf("OG o/p: %s\n", s1);
 // 	printf("My count: %d\nOG count:%d", b, c);
 // }

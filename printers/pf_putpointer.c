@@ -6,18 +6,19 @@
 /*   By: tsharma <tsharma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:37:57 by tsharma           #+#    #+#             */
-/*   Updated: 2022/05/19 16:36:45 by tsharma          ###   ########.fr       */
+/*   Updated: 2022/05/20 16:50:06 by tsharma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 #include "../libft/libft.h"
 
-void	pf_putpointer(unsigned long l, t_snc *item)
+int	pf_putpointer(unsigned long l)
 {
 	char			res[20];
 	unsigned long	i;
 	char			*str;
+	char			*str2;
 
 	i = 0;
 	if (l == 0)
@@ -30,9 +31,9 @@ void	pf_putpointer(unsigned long l, t_snc *item)
 	}
 	res[i] = '\0';
 	str = ft_revstr(res);
-	item->str = ft_strjoin("0x", str);
-	ft_putstr_fd(item->str, 1);
+	str2 = ft_strjoin("0x", str);
+	ft_putstr_fd(str2, 1);
 	free(str);
-	free(item->str);
-	item->count = i + 2;
+	free(str2);
+	return (i + 2);
 }

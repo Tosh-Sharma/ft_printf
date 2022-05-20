@@ -6,30 +6,31 @@
 /*   By: tsharma <tsharma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 15:08:09 by tsharma           #+#    #+#             */
-/*   Updated: 2022/05/19 16:36:45 by tsharma          ###   ########.fr       */
+/*   Updated: 2022/05/20 16:58:42 by tsharma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 #include "../libft/libft.h"
 
-void	handle_neg(t_snc *item, int is_neg, int iterator)
+int	handle_neg(char *str, int is_neg, int iterator)
 {
 	if (is_neg == 1)
 	{
 		ft_putstr_fd("-", 1);
 		iterator++;
 	}
-	ft_putstr_fd(item->str, 1);
-	free(item->str);
-	item->count = iterator;
+	ft_putstr_fd(str, 1);
+	free(str);
+	return (iterator);
 }
 
-void	putnbr_fd(int n, int base, char *input, t_snc *item)
+int	putnbr_fd(int n, size_t base, char *input)
 {
 	int			iterator;
 	char		c[20];
 	int			is_neg;
+	char		*str;
 
 	iterator = 0;
 	is_neg = 0;
@@ -45,25 +46,25 @@ void	putnbr_fd(int n, int base, char *input, t_snc *item)
 		iterator++;
 	}
 	c[iterator] = 0;
-	item->str = ft_revstr(c);
-	handle_neg(item, is_neg, iterator);
+	str = ft_revstr(c);
+	return (handle_neg(str, is_neg, iterator));
 }
 
-void	pf_putnbr(int n, int base, char *input, t_snc *item)
+int	pf_putnbr(int n, char *input)
 {
+	size_t	base;
+
+	base = ft_strlen(input);
 	if (base == 10 && n == -2147483648)
 	{
-		item->str = "-2147483648";
-		ft_putstr_fd(item->str, 1);
-		item->count = 11;
+		ft_putstr_fd("-2147483648", 1);
+		return (11);
 	}
 	else if (n == 0)
 	{
 		ft_putchar_fd(input[0], 1);
-		item->str = ft_straddchar("", '0');
-		free(item->str);
-		item->count = 1;
+		return (1);
 	}
 	else
-		putnbr_fd(n, base, input, item);
+		return (putnbr_fd(n, base, input));
 }

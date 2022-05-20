@@ -6,24 +6,20 @@
 /*   By: tsharma <tsharma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:43:19 by tsharma           #+#    #+#             */
-/*   Updated: 2022/05/19 16:36:45 by tsharma          ###   ########.fr       */
+/*   Updated: 2022/05/20 18:24:40 by tsharma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-typedef struct s_string_and_count
-{
-	int		count;
-	char	*str;
-}	t_snc;
+# include <stdarg.h>
 
-int		ft_printf(const char *s, ...);
-void	pf_putchar(char c, int fd, t_snc *item);
-void	pf_putstr(char *s, int fd, t_snc *item);
-void	pf_putnbr(int n, int base, char *input, t_snc *item);
-void	pf_putunbr(unsigned int n, int base, char *input, t_snc *item);
-void	pf_putpointer(unsigned long l, t_snc *item);
+int	ft_printf(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+int	pf_putchar(char c, int fd);
+int	pf_putstr(char *s, int fd);
+int	pf_putnbr(int n, char *input);
+int	pf_putunbr(unsigned int n, char *input);
+int	pf_putpointer(unsigned long l);
 
 #endif
