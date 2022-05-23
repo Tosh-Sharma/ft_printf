@@ -6,13 +6,12 @@
 /*   By: tsharma <tsharma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:12:16 by tsharma           #+#    #+#             */
-/*   Updated: 2022/05/20 18:24:34 by tsharma          ###   ########.fr       */
+/*   Updated: 2022/05/23 14:47:45 by tsharma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft/libft.h"
-#include <stdio.h>
 
 int	handle_print(const char *s, va_list args, size_t *i)
 {
@@ -35,26 +34,6 @@ int	handle_print(const char *s, va_list args, size_t *i)
 		return (pf_putchar('%', 1));
 	else
 		return (pf_putchar(s[0], 1));
-}
-
-int	handle_spaces(const char *s, va_list args, size_t *i)
-{
-	int	n;
-	int	count;
-
-	count = 0;
-	if (s[0] == 'd' || s[0] == 'i')
-	{
-		n = va_arg(args, int);
-		if (n >= 0)
-		{
-			ft_putchar_fd(' ', 1);
-			++count;
-		}
-		count += pf_putnbr(n, "0123456789");
-	}
-	i = i + 2;
-	return (count);
 }
 
 int	analyse_flags(const char *s, va_list args, size_t *i)
@@ -95,18 +74,3 @@ int	ft_printf(const char *s, ...)
 	va_end(args);
 	return (count);
 }
-
-// int	main(void)
-// {
-// 	char	*s1;
-// 	int		a;
-// 	int		b;
-// 	int		c;
-// 	int		*d;
-
-// 	a = 25;
-// 	s1 = "Hello";
-// 	b = ft_printf("My o/p: %s \n", s1);
-// 	c = printf("OG o/p: %s\n", s1);
-// 	printf("My count: %d\nOG count:%d", b, c);
-// }

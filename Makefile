@@ -48,11 +48,10 @@ SRCS = 	ft_printf.c \
 		printers/pf_putnbr.c \
 		printers/pf_putunbr.c \
 		printers/pf_putpointer.c \
+		flags/spaces.c \
 		$(LIB_SRC)
 
 OBJS = ${SRCS:.c=.o}
-
-BONUS =	# ft_lstadd_front.c
 
 BONUS_OBJS = $(BONUS:.c=.o)
 
